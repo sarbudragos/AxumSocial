@@ -1,0 +1,7 @@
+-- Your SQL goes here
+CREATE TABLE posts(
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    content VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    user_id INT NOT NULL REFERENCES users(id)
+);
