@@ -35,22 +35,11 @@ impl PostService{
     }
 
     pub async fn get_posts_of_user_sorted(&self, user_id: i32) -> Result<Vec<Post>, (StatusCode, String)>{
-        // self.post_repository.get_posts_of_user(user_id).await.map(
-        //     |mut posts| {
-        //         let sorted_posts = posts.clone().sort_by(|post1, post2| { post1.get_creation_date().cmp(&post2.get_creation_date()) })
-        //         sorted_posts
-        //     }
-        // )
-
-        // match self.post_repository.get_posts_of_user(user_id).await {
-        //     Ok(mut posts) => {
-        //         posts.sort_by_key(Post::get_creation_date)
-        //     }
-        // }
-
         let mut unsorted_posts = self.post_repository.get_posts_of_user(user_id).await?;
 
         unsorted_posts.sort_by_key(Post::get_creation_date);
+
+        unsorted_posts.reverse();
 
         Ok(unsorted_posts)
     }

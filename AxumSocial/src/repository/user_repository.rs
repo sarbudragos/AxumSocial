@@ -37,21 +37,6 @@ impl UserRepository{
             })
     }
 
-    pub async fn get_page(&self, page_number: i32, page_size: i32) -> Result<Vec<User>, (StatusCode, String)>{
-        users
-            .select(User::as_select())
-            .limit(page_size as i64)
-            .offset((page_number * page_size) as i64)
-            .load(&mut self.get_connection().await)
-            .await
-            .map_err(|e| {
-                (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    json!({"success": false, "message": e.to_string()}).to_string(),
-                )
-            })
-    }
-
     pub async fn get_one(&self, other_id: i32) -> Result<User, (StatusCode, String)>{
         users
             .filter(id.eq(&other_id))

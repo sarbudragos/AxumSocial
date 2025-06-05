@@ -23,9 +23,6 @@ impl UserService{
                 |users| users.into_iter().map(UserData::from_user).collect()
             )
     }
-    // pub async fn get_page(&self, page_number: i32, page_size: i32) -> Result<Vec<User>, (StatusCode, String)>{
-    //     self.user_repository.get_page(page_number, page_size).await
-    // }
     pub async fn get_user_by_id(&self, id:i32) -> Result<UserData, (StatusCode, String)>{
         self.user_repository.get_one(id).await
             .map(UserData::from_user)
@@ -57,7 +54,7 @@ impl UserService{
             )
     }
 
-    pub async fn add_follow(&self, follow: UserFollow) -> Result<(UserFollow), (StatusCode, String)>{
+    pub async fn add_follow(&self, follow: UserFollow) -> Result<UserFollow, (StatusCode, String)>{
         self.user_follow_repository.add_follow(follow).await
     }
 
